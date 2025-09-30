@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run PHPUnit",
+      "type": "php",
+      "request": "launch",
+      "program": "${workspaceFolder}/vendor/bin/phpunit",
+      "args": [
+        "--bootstrap", "vendor/autoload.php",
+        "--colors=always",
+        "tests"
+      ],
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "php"
+    }
+  ]
+}

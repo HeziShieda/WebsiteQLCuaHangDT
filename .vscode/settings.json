@@ -1,0 +1,7 @@
+{
+    "phpunit.execPath": "./vendor/bin/phpunit",
+    "phpunit.args": [
+        "--bootstrap",
+        "vendor/autoload.php"
+    ]
+}
