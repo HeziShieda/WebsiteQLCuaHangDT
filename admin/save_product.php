@@ -21,7 +21,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     }
 
     // Handle image upload
-    $uploadDir = '../uploads/products/';
+    $uploadDir = '../uploads/';
     if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
 
     $imagePath = '';
@@ -38,14 +38,14 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
             echo json_encode($response); exit;
         }
 
-        $imagePath = 'uploads/products/' . uniqid() . '.' . $ext;
+        $imagePath = 'uploads/' . uniqid() . '.' . $ext;
         if (!move_uploaded_file($_FILES['image']['tmp_name'], '../' . $imagePath)) {
             $response['message'] = 'Lỗi upload ảnh';
             echo json_encode($response); exit;
         }
     } else {
         // Không upload ảnh -> dùng ảnh mặc định
-        $imagePath = 'uploads/products/default.jpg';
+        $imagePath = 'uploads/default.jpg';
     }
 
 
