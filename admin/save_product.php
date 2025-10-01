@@ -21,15 +21,34 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     }
 
     // Handle image upload
+    $uploadDir = '../uploads/products/';
+    if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
+
     $imagePath = '';
-    if(isset($_FILES['image']) && $_FILES['image']['tmp_name'] != ''){
+    if (isset($_FILES['image']) && $_FILES['image']['tmp_name'] != '') {
+        if ($_FILES['image']['error'] != UPLOAD_ERR_OK) {
+            $response['message'] = 'Lỗi khi upload file';
+            echo json_encode($response); exit;
+        }
+
         $ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
-        $imagePath = 'uploads/products/'.uniqid().'.'.$ext;
-        if(!move_uploaded_file($_FILES['image']['tmp_name'], '../'.$imagePath)){
+        $allowed = ['jpg','jpeg','png','gif'];
+        if (!in_array(strtolower($ext), $allowed)) {
+            $response['message'] = 'Chỉ cho phép file ảnh (jpg, png, gif)';
+            echo json_encode($response); exit;
+        }
+
+        $imagePath = 'uploads/products/' . uniqid() . '.' . $ext;
+        if (!move_uploaded_file($_FILES['image']['tmp_name'], '../' . $imagePath)) {
             $response['message'] = 'Lỗi upload ảnh';
             echo json_encode($response); exit;
         }
+    } else {
+        // Không upload ảnh -> dùng ảnh mặc định
+        $imagePath = 'uploads/products/default.jpg';
     }
+
+
 
     if($id>0){
         // Update
